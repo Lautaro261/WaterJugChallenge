@@ -1,0 +1,15 @@
+{
+  "version": 2,
+  "dgSpecHash": "P440pry6A+fbhC+jP+U04MM10HmZDyRYfa01S3hFMp/Z928BjSI2sWnouBQdgXPu2rahLs2237H9H6Sjg4i2Mg==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\Equipo4\\Documents\\1.5 Curso C#\\WaterJugChallenge\\WaterJugChallenge\\WaterJugChallenge.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Equipo4\\.nuget\\packages\\microsoft.extensions.apidescription.server\\6.0.5\\microsoft.extensions.apidescription.server.6.0.5.nupkg.sha512",
+    "C:\\Users\\Equipo4\\.nuget\\packages\\microsoft.openapi\\1.2.3\\microsoft.openapi.1.2.3.nupkg.sha512",
+    "C:\\Users\\Equipo4\\.nuget\\packages\\swashbuckle.aspnetcore\\6.4.0\\swashbuckle.aspnetcore.6.4.0.nupkg.sha512",
+    "C:\\Users\\Equipo4\\.nuget\\packages\\swashbuckle.aspnetcore.swagger\\6.4.0\\swashbuckle.aspnetcore.swagger.6.4.0.nupkg.sha512",
+    "C:\\Users\\Equipo4\\.nuget\\packages\\swashbuckle.aspnetcore.swaggergen\\6.4.0\\swashbuckle.aspnetcore.swaggergen.6.4.0.nupkg.sha512",
+    "C:\\Users\\Equipo4\\.nuget\\packages\\swashbuckle.aspnetcore.swaggerui\\6.4.0\\swashbuckle.aspnetcore.swaggerui.6.4.0.nupkg.sha512"
+  ],
+  "logs": []
+}
