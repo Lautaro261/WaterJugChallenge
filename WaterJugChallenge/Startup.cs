@@ -7,7 +7,7 @@ namespace WaterJugChallenge
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddSingleton<WaterJugSolver>(); // Registra WaterJugSolver como Singleton
+            services.AddSingleton<WaterJugSolver>();
             services.AddSwaggerGen();
         }
 

@@ -30,3 +30,4 @@ C:\Users\Equipo4\Documents\1.5 Curso C#\WaterJugChallenge\WaterJugChallenge\obj\
 C:\Users\Equipo4\Documents\1.5 Curso C#\WaterJugChallenge\WaterJugChallenge\obj\Debug\net8.0\WaterJugChallenge.pdb
 C:\Users\Equipo4\Documents\1.5 Curso C#\WaterJugChallenge\WaterJugChallenge\obj\Debug\net8.0\WaterJugChallenge.genruntimeconfig.cache
 C:\Users\Equipo4\Documents\1.5 Curso C#\WaterJugChallenge\WaterJugChallenge\obj\Debug\net8.0\ref\WaterJugChallenge.dll
+C:\Users\Equipo4\Documents\1.5 Curso C#\WaterJugChallenge\WaterJugChallenge\obj\Debug\net8.0\WaterJugChallenge.sourcelink.json

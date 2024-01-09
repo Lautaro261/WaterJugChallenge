@@ -7,7 +7,7 @@ namespace WaterJugChallenge.Services
         public WaterJugSolution Solve(int jugCapacityX, int jugCapacityY, int targetAmountZ)
         {
 
-            //Se comprueba si es posible medir la cantidad de agua deseada
+            //It is checked whether it is possible to measure the desired amount of water
             if (targetAmountZ > jugCapacityX && targetAmountZ > jugCapacityY)
             {
                 return new WaterJugSolution { Steps = new List<WaterJugStep> { new WaterJugStep { Action = "No Solution" } } };
@@ -17,11 +17,11 @@ namespace WaterJugChallenge.Services
                 return new WaterJugSolution { Steps = new List<WaterJugStep> { new WaterJugStep { Action = "No Solution" } } };
             }
 
-            //Busco 2 soluciones o 2 caminos posibles
+            //It searches for 2 solutions or 2 possible paths
             WaterJugSolution solution1 = BreadthFirstSearch(jugCapacityX, jugCapacityY, targetAmountZ);
             WaterJugSolution solution2 = BreadthFirstSearch(jugCapacityY, jugCapacityX, targetAmountZ);
 
-            //Retorno la menor solucion o menor camino
+            //returns the smallest value of the solution
             return solution1.Steps.Count < solution2.Steps.Count ? solution1 : solution2;
         }
 
@@ -37,7 +37,7 @@ namespace WaterJugChallenge.Services
             return steps;
         }
 
-        // calculo el máximo comun divisor de 'a' y 'b'
+        // Calculates the greatest common divisor of 'a' and 'b'
         private int CalculateGCD(int a, int b)
         {
             if (b == 0)
@@ -45,37 +45,35 @@ namespace WaterJugChallenge.Services
             return CalculateGCD(b, a % b);
         }
 
-        // Realizo una busqueda en amplitud para encontrar el camino mas corto
+        // performs a breadth-first search to find the shortest path
         private WaterJugSolution BreadthFirstSearch(int jugCapacityX, int jugCapacityY, int targetAmountZ)
         {
 
-            //se crea una cola para almacenar los estados
+            // Creates a queue to store the states
             Queue<WaterJugStep> queue = new Queue<WaterJugStep>();
 
-            //se crea un conjunto para almacenar los estados visitados
+            //Creates a set to store the visited states
             HashSet<(int, int)> visited = new HashSet<(int, int)>();
 
-            //se agrega el estado inicial a la cola y al conjunto de visitados
+            //adds the initial state to the queue and the set of visited states
             queue.Enqueue(new WaterJugStep { JugXAmount = 0, JugYAmount = 0 });
             visited.Add((0, 0));
 
             while (queue.Count > 0)
             {
-                //se obtiene el siguiente estado de la cola
+                //gets the next state from the queue
                 WaterJugStep currentStep = queue.Dequeue();
-                //Console.WriteLine("currentStep en X"+ currentStep.JugXAmount);
-                //Console.WriteLine("currentStep en Y" + currentStep.JugYAmount);
 
-                // Si este estado es la solucion, devuelve la secuencia de pasos
+                // if this state is the solution, it returns the sequence of steps
                 if (currentStep.JugXAmount == targetAmountZ || currentStep.JugYAmount == targetAmountZ)
                 {
                     return new WaterJugSolution { Steps = GetStepsFrom(currentStep) };
                 }
 
-                //se genera todos los posibles siguientes estados
+                //generates all possible next states
                 foreach (WaterJugStep nextStep in GenerateNextSteps(currentStep, jugCapacityX, jugCapacityY))
                 {
-                // Si el estado siguiente no ha sido visitado, lo agrego a la cola y al conjunto de visitados
+                    // if the next state has not been visited, add it to the queue and the set of visited states
                     if (!visited.Contains((nextStep.JugXAmount, nextStep.JugYAmount)))
                     {
                         queue.Enqueue(nextStep);
@@ -83,33 +81,33 @@ namespace WaterJugChallenge.Services
                     }
                 }
             }
-                 // Si no se encontró ninguna solucion, retorna una secuencia vacia
+            // if no solution was found, it returns an empty sequence
             return new WaterJugSolution { Steps = new List<WaterJugStep>() };
         }
 
         private IEnumerable<WaterJugStep> GenerateNextSteps(WaterJugStep currentStep, int jugCapacityX, int jugCapacityY)
         {
-            // Llenar el jarro X
+            // Fill jug X
             yield return new WaterJugStep { JugXAmount = jugCapacityX, JugYAmount = currentStep.JugYAmount, Action = "FillJugX", PreviousStep = currentStep };
             //yield return new WaterJugStep { JugXAmount = currentStep.JugXAmount, JugYAmount = jugCapacityY, Action = "FillJugX", PreviousStep = currentStep };
-            // Llenar el jarro Y
+            // Fill jug Y
             yield return new WaterJugStep { JugXAmount = currentStep.JugXAmount, JugYAmount = jugCapacityY, Action = "FillJugY", PreviousStep = currentStep };
             //yield return new WaterJugStep { JugXAmount = jugCapacityX, JugYAmount = currentStep.JugYAmount, Action = "FillJugY", PreviousStep = currentStep };
-            // Vaciar el jarro X
+            // Empty jug X.
             yield return new WaterJugStep { JugXAmount = 0, JugYAmount = currentStep.JugYAmount, Action = "EmptyJugX", PreviousStep = currentStep };
-            // Vaciar el jarro Y
+            // Empty jug Y
             yield return new WaterJugStep { JugXAmount = currentStep.JugXAmount, JugYAmount = 0, Action = "EmptyJugY", PreviousStep = currentStep };
-            
-            // Transferir del jarro X al jarro Y
+
+            // TransferXToY
             int transferAmount = Math.Min(currentStep.JugXAmount, jugCapacityY - currentStep.JugYAmount);
             yield return new WaterJugStep { JugXAmount = currentStep.JugXAmount - transferAmount, JugYAmount = currentStep.JugYAmount + transferAmount, Action = "TransferXToY", PreviousStep = currentStep };
-            // Transferir del jarro Y al jarro X
+            // TransferYToX
             transferAmount = Math.Min(currentStep.JugYAmount, jugCapacityX - currentStep.JugXAmount);
             yield return new WaterJugStep { JugXAmount = currentStep.JugXAmount + transferAmount, JugYAmount = currentStep.JugYAmount - transferAmount, Action = "TransferYToX", PreviousStep = currentStep };
-            
 
 
-            // limita los valores a las capacidades maximas de los jarrones
+
+            // limit the values to the maximum capacities of the jug
             yield return new WaterJugStep { JugXAmount = Math.Min(jugCapacityX, currentStep.JugXAmount + currentStep.JugYAmount), JugYAmount = Math.Max(0, currentStep.JugXAmount + currentStep.JugYAmount - jugCapacityX), Action = "TransferYToX", PreviousStep = currentStep };
             yield return new WaterJugStep { JugXAmount = Math.Max(0, currentStep.JugXAmount + currentStep.JugYAmount - jugCapacityY), JugYAmount = Math.Min(jugCapacityY, currentStep.JugXAmount + currentStep.JugYAmount), Action = "TransferXToY", PreviousStep = currentStep };
         }
@@ -119,7 +117,7 @@ namespace WaterJugChallenge.Services
     public class WaterJugSolution
     {
         public List<WaterJugStep> Steps { get; set; }
-        // Propiedad Count que devuelve la cantidad de pasos en la solución
+        // property Count that returns the number of steps in the solution
         public int Count
         {
             get
